@@ -164,7 +164,7 @@ def to_gpu(x):
 
 
 def text_to_sequence(text):
-    result = [char_to_idx[ch] for ch in text]
+    result = [char_to_idx[ch] for ch in text if ch in char_to_idx]
     return result
 
 
