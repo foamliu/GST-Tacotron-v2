@@ -8,8 +8,8 @@ sampling_rate = 22050
 top_db = 20
 reduced_ratios = []
 
-for i in range(20):
-    audiopath = '../audios/{}.wav'.format(i)
+for i in range(10):
+    audiopath = '../audios/audio_{}.wav'.format(i)
     print(audiopath)
     y, sr = librosa.load(audiopath)
     # Trim the beginning and ending silence
