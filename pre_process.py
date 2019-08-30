@@ -19,7 +19,7 @@ def get_aishell_data(split):
         tokens = line.split()
         key = tokens[0]
         trn = ''.join(tokens[1:])
-        tran_dict[key] = trn
+        tran_dict[key] = trn.strip()
 
     samples = []
 
