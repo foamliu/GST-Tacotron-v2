@@ -1,36 +1,51 @@
 import os
 import pickle
 
+import pinyin
 from tqdm import tqdm
 
-from config import data_file, thchs30_folder
+from config import data_file, wav_folder, tran_file
 
 
 # split in ['train', 'test', 'dev']
-def get_thchs30_data(split):
+def get_aishell_data(split):
     print('loading {} samples...'.format(split))
 
-    data_dir = os.path.join(thchs30_folder, 'data')
-    wave_dir = os.path.join(thchs30_folder, split)
+    with open(tran_file, 'r', encoding='utf-8') as file:
+        lines = file.readlines()
+
+    tran_dict = dict()
+    for line in lines:
+        tokens = line.split()
+        key = tokens[0]
+        trn = ''.join(tokens[1:])
+        tran_dict[key] = trn
 
     samples = []
 
-    for file in tqdm(os.listdir(wave_dir)):
-        file_path = os.path.join(wave_dir, file)
-        if file_path.endswith('.wav'):
-            text_path = os.path.join(data_dir, file + '.trn')
-            with open(text_path, 'r', encoding='utf-8') as f:
-                text = f.readlines()[1].strip()
-            samples.append({'audiopath': file_path, 'text': text})
+    folder = os.path.join(wav_folder, split)
+    dirs = [os.path.join(folder, d) for d in os.listdir(folder) if os.path.isdir(os.path.join(folder, d))]
+    for dir in tqdm(dirs):
+        files = [f for f in os.listdir(dir) if f.endswith('.wav')]
+
+        for f in files:
+            audiopath = os.path.join(dir, f)
+
+            key = f.split('.')[0]
+            if key in tran_dict:
+                text = tran_dict[key]
+                text = pinyin.get(text, format="numerical", delimiter=" ")
+
+                samples.append({'audiopath': audiopath, 'text': text})
 
     return samples
 
 
 def main():
     data = dict()
-    data['train'] = get_thchs30_data('train')
-    data['dev'] = get_thchs30_data('dev')
-    data['test'] = get_thchs30_data('test')
+    data['train'] = get_aishell_data('train')
+    data['dev'] = get_aishell_data('dev')
+    data['test'] = get_aishell_data('test')
 
     with open(data_file, 'wb') as file:
         pickle.dump(data, file)

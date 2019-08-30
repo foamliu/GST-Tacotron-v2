@@ -1,3 +1,5 @@
+import os
+
 import torch
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')  # sets device for model and PyTorch tensors
@@ -13,8 +15,10 @@ char_to_idx = {vocab[i]: i for i in range(0, len(vocab))}
 
 unk_id = 0
 
-thchs30_folder = 'data/data_thchs30'
-data_file = 'data/data_thchs30.pkl'
+aishell_folder = 'data/data_aishell'
+wav_folder = os.path.join(aishell_folder, 'wav')
+tran_file = os.path.join(aishell_folder, 'transcript/aishell_transcript_v0.8.txt')
+data_file = 'data/data_aishell.pkl'
 
 ################################
 # Experiment Parameters        #
