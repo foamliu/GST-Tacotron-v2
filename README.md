@@ -1,6 +1,6 @@
 # Tacotron 2
 
-A PyTorch implementation of Tacotron2, described in [Natural TTS Synthesis By Conditioning Wavenet On Mel Spectrogram Predictions](https://arxiv.org/pdf/1712.05884.pdf), an end-to-end text-to-speech(TTS) neural network architecture, which directly converts character text sequence to speech.
+A PyTorch implementation of [Style Tokens: Unsupervised Style Modeling, Control and Transfer in End-to-End Speech Synthesis](https://arxiv.org/abs/1803.09017).
 
 ## Dataset
 
@@ -54,7 +54,7 @@ $ tensorboard --logdir runs
 ```
 
 ### Demo
-Generate mel-spectrogram for text "Waveglow is really awesome!"
+Generate mel-spectrogram for text "相对论直接和间接的催生了量子力学的诞生 也为研究微观世界的高速运动确立了全新的数学模型"
 ```bash
 $ python demo.py
 ```
