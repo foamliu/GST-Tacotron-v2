@@ -218,7 +218,7 @@ class Denoiser(torch.nn.Module):
 
 def test(model, step_num, loss, get_mel):
     model.eval()
-    text = "相对论直接和间接的催生了量子力学的诞生 也为研究微观世界的高速运动确立了全新的数学模型"
+    text = "相对论直接和间接的催生了量子力学的诞生"
     text = pinyin.get(text, format="numerical", delimiter=" ")
     sequence = np.array(text_to_sequence(text))[None, :]
     sequence = torch.autograd.Variable(torch.from_numpy(sequence)).cuda().long()
